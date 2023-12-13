@@ -1,0 +1,88 @@
+For our studio project we are creating a adventure game. we will be using html, css and javascript to complete this project. This project will have visual elements.
+It will be based on a character named Pavitra Prabhakar. In this game at every point Pavitra will be given a choice and whatever 
+he chooses will decide his fate in the game. This adventure game will be taking place in the Amazon forest. 
+Here are some must have features of the game:
+1. At the start of the game, pavitra will be given a choice to choose an item from four items that he will carry with him in his bag. This item is going to be helpfull.
+for him during his adventure. These choices will be displayed as cards from what he'll choose the item.
+2. The goal of Pavitra is to find an ancient artifact which is reciding inside an ancient temple on top of a hill.
+3. This game is to be completed before the sun sets. So the game should have a timer which will be visualised as if a sun is rising and eventually is leading towards getting set as the time passes.
+His story is given below
+**"Raiders of the Lost Artifact"**
+
+---
+
+**Prologue: The Legend Unveiled**
+
+Centuries ago, in a long-forgotten civilization nestled deep within the heart of the Amazon rainforest, a powerful artifact known as the "Scepter of Eternity" was created. Legend had it that the Scepter possessed unimaginable powers, capable of controlling time and unlocking ancient secrets.
+
+As the legend spread, the civilization faced an impending doom, and the inhabitants decided to safeguard the Scepter by concealing it within a temple, laden with traps and mysteries to deter any who dared to seek its power.
+
+---
+
+**Chapter 1: The Mysterious Map**
+
+Pavitra Prabhakar, renowned archaeologist and adventurer, Finds a cryptic message in an old notebook of Luna, a descendant of the ancient civilization, leading him to the hidden temple. Luna's ancestors were entrusted with the secret of the Scepter, and the time had come for its discovery.
+
+*Select your path:*
+
+1. **Take the winding river route.**
+2. **Repel Down the Cliff**
+
+---
+
+**Chapter 2: The Whispering Temple**
+
+He finds himself standing in front of an ancient temple hidden within the jungle. The entrance is adorned with strange symbols. A faint whispering sound echoes through the air.
+
+*Choose your next move:*
+
+1. **Decipher the symbols and enter through the main entrance.**
+2. **Consult the book which you brought with you**
+
+---
+
+**Chapter 3: The Chamber of Shadows**
+
+Inside the temple, Pavitra encounters a vast chamber filled with shadows. In the center, a pedestal holds the artifact. However, a series of deadly traps guard the way.
+
+*Make your decision:*
+
+1. **Brave the hidden spikes on the floor and make a run for the artifact.**
+2. **Examine the walls for clues to disarm the traps safely.**
+
+---
+
+**Chapter 4: The Rival Archaeologist**
+
+As Indiana secures the artifact, a rival archaeologist, Dr. Renegade, appears. He demands the artifact for himself and challenges Indiana to a duel.
+
+*How will you confront Dr. Renegade?*
+
+1. **Engage in a traditional fistfight to settle the dispute.**
+2. **Outsmart him with your knowledge of ancient artifacts.**
+
+---
+
+**Chapter 5: The Great Escape**
+
+With the artifact in hand, Pavi and Dr. Renegade trigger a collapsing mechanism within the temple. The exit is blocked, and time is running out.
+
+*Select your escape route:*
+
+1. **Navigate through a series of secret passages to find an alternative exit.**
+2. **Use your whip to create a makeshift bridge and cross a dangerous gap.**
+
+---
+
+**Epilogue: The Triumph of the Adventurer**
+
+Indiana Jones successfully escapes the collapsing temple, leaving Dr. Renegade behind. The artifact is secured, and Indiana reflects on the thrilling adventure.
+
+*How will you conclude this tale?*
+
+1. **Return the artifact to a museum to share its history with the world.**
+2. **Keep the artifact for yourself, unlocking its mysterious powers.**
+
+---
+
+Your choices shape the outcome of this interactive Indiana Jones-style adventure! Enjoy the thrill of discovery and danger as you navigate through the twists and turns of the story. Unravel the secrets of the Scepter of Eternity and decide its fate in the modern world.
