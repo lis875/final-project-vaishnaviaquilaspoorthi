@@ -2,6 +2,7 @@ import pygame
 import sys
 import textwrap
 import pygame.mixer
+import random
 
 # Initialize Pygame
 pygame.init()
@@ -32,11 +33,43 @@ clock = pygame.time.Clock()
 current_screen = "intro"
 current_chapter = 1
 
+health = 100  # Initial health
+
+# Mini-game functions
+def mini_deciphering_game():
+    # Implement the mini deciphering game logic here
+    pass
+
+def mini_guess_the_pattern_game():
+    # Implement the mini guess the pattern game logic here
+    pass
+
+def mini_trivia_game():
+    # Implement the mini trivia game logic here
+    pass
+
+def mini_math_game():
+    # Implement the mini math game logic here
+    pass
+
+# Function to handle health changes
+def handle_health(health_change):
+    global health
+    health += health_change
+
+# Function to handle choices
+def handle_choice(chapter_data, choice_number):
+    choice_function = chapter_data.get("choice_functions", {}).get(choice_number)
+    
+    if choice_function:
+        # Call the specified function for the chosen choice
+        choice_function()
+
 # Chapter data
 
 chapters = {
     "intro": {
-        "text": "Welcome to Raiders of the Lost Artifact! \n Your goal is to find the ancient Scepter of Eternity hidden deep within the Amazon rainforest. \n Make choices to navigate through the challenges and uncover the mysteries.",
+        "text": "Welcome to Raiders of the Lost Artifact! Your goal is to find the ancient Scepter of Eternity hidden deep within the Amazon rainforest. Make choices to navigate through the challenges and uncover the mysteries.",
         "button_text": "Start",
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/intro_background.jpg"),
@@ -46,72 +79,96 @@ chapters = {
     },
     "chapter1": {
         "text": "You find a cryptic message leading you to the hidden temple. Select your path:",
-        "choices": ["Take the winding river route.", "Repel down the cliff."],
+        "choices": ["Take the winding river route. (Lose 5 health)", "Repel down the cliff. (Lose 10 health)"],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/river_background.jpg"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [2, 3],  # Corresponding to the choices
+        "next_chapters": [2, 3],
+        "choice_functions": {
+            1: lambda: handle_health(-5),
+            2: lambda: handle_health(-10)
+        }
     },
     "chapter2": {
         "text": "He finds himself standing in front of an ancient temple hidden within the jungle. The entrance is adorned with strange symbols. A faint whispering sound echoes through the air. Choose your next move:",
         "choices": [
-            "Decipher the symbols and enter through the main entrance.",
-            "Consult the book which you brought with you",
+            "Decipher the symbols and enter through the main entrance. (Mini deciphering game)",
+            "Consult the book which you brought with you"
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [4, 5],  # Corresponding to the choices
+        "next_chapters": [4, 5],
+        "choice_functions": {
+            1: mini_deciphering_game,
+            2: lambda: None  # Placeholder for the second choice
+        }
     },
     "chapter3": {
         "text": "Inside the temple, Pavitra encounters a vast chamber filled with shadows. In the center, a pedestal holds the artifact. However, a series of deadly traps guard the way. Make your decision:",
         "choices": [
-            "Brave the hidden spikes on the floor and make a run for the artifact.",
-            "Examine the walls for clues to disarm the traps safely.",
+            "Brave the hidden spikes on the floor and make a run for the artifact. (Lose 10 health)",
+            "Examine the walls for clues to disarm the traps safely. (Mini guess the pattern game)"
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter3.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [6, 7],  # Corresponding to the choices
+        "next_chapters": [6, 7],
+        "choice_functions": {
+            1: lambda: handle_health(-10),
+            2: mini_guess_the_pattern_game
+        }
     },
     "chapter4": {
         "text": "As Indiana secures the artifact, a rival archaeologist, Dr. Renegade, appears. He demands the artifact for himself and challenges Indiana to a duel. How will you confront Dr. Renegade?",
         "choices": [
-            "Engage in a traditional fistfight to settle the dispute.",
-            "Outsmart him with your knowledge of ancient artifacts.",
+            "Engage in a traditional fistfight to settle the dispute. (Lose 20 health)",
+            "Outsmart him with your knowledge of ancient artifacts. (Mini trivia game)"
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter4.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [8, 9],  # Corresponding to the choices
+        "next_chapters": [8, 9],
+        "choice_functions": {
+            1: lambda: handle_health(-20),
+            2: mini_trivia_game
+        }
     },
     "chapter5": {
         "text": "With the artifact in hand, Pavi and Dr. Renegade trigger a collapsing mechanism within the temple. The exit is blocked, and time is running out. Select your escape route:",
         "choices": [
-            "Navigate through a series of secret passages to find an alternative exit.",
-            "Use your whip to create a makeshift bridge and cross a dangerous gap.",
+            "Navigate through a series of secret passages to find an alternative exit. (Mini math game)",
+            "Use your whip to create a makeshift bridge and cross a dangerous gap. (Lose 10 health)"
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter5.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [10, 11],  # Corresponding to the choices
+        "next_chapters": [10, 11],
+        "choice_functions": {
+            1: mini_math_game,
+            2: lambda: handle_health(-10)
+        }
     },
     "epilogue": {
         "text": "Indiana Jones successfully escapes the collapsing temple, leaving Dr. Renegade behind. The artifact is secured, and Indiana reflects on the thrilling adventure. How will you conclude this tale?",
         "choices": [
             "Return the artifact to a museum to share its history with the world.",
-            "Keep the artifact for yourself, unlocking its mysterious powers.",
+            "Keep the artifact for yourself, unlocking its mysterious powers."
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter6.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [12, 13],  # Corresponding to the choices
+        "next_chapters": [12, 13],
+        "choice_functions": {
+            1: lambda: None,  # Placeholder for the first choice
+            2: lambda: None   # Placeholder for the second choice
+        }
     },
 }
 
@@ -182,9 +239,6 @@ def display_choices(choices, choice_rects):
         screen.blit(choice_text, (text_x, text_y))
 
 
-
-
-
 def main():
     global current_screen, current_chapter
     pygame.mixer.music.play(-1)
@@ -211,6 +265,7 @@ def main():
                         for i, rect in enumerate(chapter_data["choice_rects"]):
                             if rect.collidepoint(pygame.mouse.get_pos()):
                                 current_chapter = chapter_data["next_chapters"][i]
+                                handle_choice(chapter_data, i + 1)  # Choices are 1-indexed
                                 current_screen = "chapter1"  # Set the screen back to chapter1
 
         if current_screen in chapters:
@@ -223,7 +278,6 @@ def main():
                 chapter_data["choice_rects"] = [pygame.Rect(screen_width // 2 - 150, screen_height - 100 + i * 60, 300, 50) for i in range(len(chapter_data["choices"]))]
                 display_choices(chapter_data["choices"], chapter_data["choice_rects"])
 
-
             elif "button_text" in chapter_data:
                 chapter_data["button_rect"] = pygame.Rect(screen_width // 2 - 150, screen_height - 100, 300, 50)
                 display_button(chapter_data["button_text"], chapter_data["button_rect"])
@@ -235,3 +289,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
