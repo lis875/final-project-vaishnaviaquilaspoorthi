@@ -216,25 +216,23 @@ def display_button(text, button_rect):
     highlight = button_rect.collidepoint(pygame.mouse.get_pos())
     pygame.draw.rect(screen, highlight_color if highlight else black, button_rect)
     screen.blit(button_text, (button_rect.x + button_rect.width // 2 - button_text.get_width() // 2,
-                              button_rect.y + button_rect.height // 2 -    button_text.get_height() // 2))
-
+                              button_rect.y + button_rect.height // 2 -
+    button_text.get_height() // 2))
 
 def display_choices(choices, choice_rects):
-    spacing = 20  # Adjust this value to control the spacing between buttons
-    button_width = 300  # Adjust this value to control the width of each button
-    total_width = len(choices) * button_width + (len(choices) - 1) * spacing
+    total_width = len(choices) * 300 + (len(choices) - 1) * 10
     start_x = (screen_width - total_width) // 2
-    text_y = screen_height - 70 - (50 - font.get_height()) // 2  
 
     for i, (choice, rect) in enumerate(zip(choices, choice_rects)):
         choice_text = font.render(choice, True, white)
 
-        text_x = start_x + i * (button_width + spacing) + (button_width - choice_text.get_width()) // 2
+        text_x = start_x + i * 310 + (300 - choice_text.get_width()) // 2
+        text_y = rect.y + (50 - choice_text.get_height()) // 2
 
-        button_surface = pygame.Surface((button_width, 50), pygame.SRCALPHA)
-        highlight = rect.collidepoint(pygame.mouse.get_pos())  # Use rect for the highlight check
+        button_surface = pygame.Surface((400, 50), pygame.SRCALPHA)
+        highlight = rect.collidepoint(pygame.mouse.get_pos())
         pygame.draw.rect(button_surface, highlight_color if highlight else black, button_surface.get_rect())
-        screen.blit(button_surface, (start_x + i * (button_width + spacing), screen_height - 100))  # Adjust the y-coordinate
+        screen.blit(button_surface, (start_x + i * 310, rect.y))
 
         screen.blit(choice_text, (text_x, text_y))
 
@@ -288,5 +286,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
