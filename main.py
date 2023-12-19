@@ -216,7 +216,7 @@ def display_button(text, button_rect):
     highlight = button_rect.collidepoint(pygame.mouse.get_pos())
     pygame.draw.rect(screen, highlight_color if highlight else black, button_rect)
     screen.blit(button_text, (button_rect.x + button_rect.width // 2 - button_text.get_width() // 2,
-                              button_rect.y + button_rect.height // 2 - button_text.get_height() // 2))
+                              button_rect.y + button_rect.height // 2 -    button_text.get_height() // 2))
 
 
 def display_choices(choices, choice_rects):
@@ -265,8 +265,7 @@ def main():
                         for i, rect in enumerate(chapter_data["choice_rects"]):
                             if rect.collidepoint(pygame.mouse.get_pos()):
                                 current_chapter = chapter_data["next_chapters"][i]
-                                handle_choice(chapter_data, i + 1)  # Choices are 1-indexed
-                                current_screen = "chapter1"  # Set the screen back to chapter1
+                                current_screen = f"chapter{current_chapter}"
 
         if current_screen in chapters:
             chapter_data = chapters[current_screen]
