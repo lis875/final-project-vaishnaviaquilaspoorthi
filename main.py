@@ -36,6 +36,7 @@ current_chapter = 1
 selected_option = None
 
 # Chapter data
+
 chapters = {
     "intro": {
         "text": "Welcome to Raiders of the Lost Artifact! \n Your goal is to find the ancient Scepter of Eternity hidden deep within the Amazon rainforest. \n Make choices to navigate through the challenges and uncover the mysteries.",
@@ -182,13 +183,25 @@ def display_button(text, button_rect):
     # Draw a background rectangle and check if the mouse is over it
     highlight = button_rect.collidepoint(pygame.mouse.get_pos())
     pygame.draw.rect(screen, highlight_color if highlight else black, button_rect)
-    screen.blit(
-        button_text,
-        (
-            button_rect.x + button_rect.width // 2 - button_text.get_width() // 2,
-            button_rect.y + button_rect.height // 2 - button_text.get_height() // 2,
-        ),
-    )
+    screen.blit(button_text, (button_rect.x + button_rect.width // 2 - button_text.get_width() // 2,
+                              button_rect.y + button_rect.height // 2 - button_text.get_height() // 2))
+
+def display_choices(choices, choice_rects):
+    total_width = len(choices) * 300 + (len(choices) - 1) * 10
+    start_x = (screen_width - total_width) // 2
+
+    for i, (choice, rect) in enumerate(zip(choices, choice_rects)):
+        choice_text = font.render(choice, True, white)
+
+        text_x = start_x + i * 310 + (300 - choice_text.get_width()) // 2
+        text_y = rect.y + (50 - choice_text.get_height()) // 2
+
+        button_surface = pygame.Surface((400, 50), pygame.SRCALPHA)
+        highlight = rect.collidepoint(pygame.mouse.get_pos())
+        pygame.draw.rect(button_surface, highlight_color if highlight else black, button_surface.get_rect())
+        screen.blit(button_surface, (start_x + i * 310, rect.y))
+
+        screen.blit(choice_text, (text_x, text_y))
 
 
 def main():
@@ -237,6 +250,9 @@ def main():
             display_text(chapter_data["text"], -50)
 
             if "choices" in chapter_data:
+                chapter_data["choice_rects"] = [pygame.Rect(screen_width // 2 - 150, screen_height - 100 + i * 60, 300, 50) for i in range(len(chapter_data["choices"]))]
+                display_choices(chapter_data["choices"], chapter_data["choice_rects"])
+
                 # Display choices as clickable buttons
                 chapter_data["choice_rects"] = [
                     pygame.Rect(50, 150 + i * 50, 300, 50)
