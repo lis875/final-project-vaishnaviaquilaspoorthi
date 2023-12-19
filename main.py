@@ -33,21 +33,88 @@ current_screen = "intro"
 current_chapter = 1
 
 # Chapter data
+
 chapters = {
     "intro": {
         "text": "Welcome to Raiders of the Lost Artifact! \n Your goal is to find the ancient Scepter of Eternity hidden deep within the Amazon rainforest. \n Make choices to navigate through the challenges and uncover the mysteries.",
         "button_text": "Start",
-        "background": pygame.transform.scale(pygame.image.load("assets/images/intro_background.jpg"), (screen_width, screen_height)),
-        "next_screen": "chapter1"
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/intro_background.jpg"),
+            (screen_width, screen_height),
+        ),
+        "next_screen": "chapter1",
     },
     "chapter1": {
         "text": "You find a cryptic message leading you to the hidden temple. Select your path:",
         "choices": ["Take the winding river route.", "Repel down the cliff."],
-        "background": pygame.transform.scale(pygame.image.load("assets/images/river_background.jpg"), (screen_width, screen_height)),
-        "next_chapters": [2, 3]  # Corresponding to the choices
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/river_background.jpg"),
+            (screen_width, screen_height),
+        ),
+        "next_chapters": [2, 3],  # Corresponding to the choices
     },
-    # Add more chapters as needed
+    "chapter2": {
+        "text": "He finds himself standing in front of an ancient temple hidden within the jungle. The entrance is adorned with strange symbols. A faint whispering sound echoes through the air. Choose your next move:",
+        "choices": [
+            "Decipher the symbols and enter through the main entrance.",
+            "Consult the book which you brought with you",
+        ],
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/temple_background.jpg"),
+            (screen_width, screen_height),
+        ),
+        "next_chapters": [4, 5],  # Corresponding to the choices
+    },
+    "chapter3": {
+        "text": "Inside the temple, Pavitra encounters a vast chamber filled with shadows. In the center, a pedestal holds the artifact. However, a series of deadly traps guard the way. Make your decision:",
+        "choices": [
+            "Brave the hidden spikes on the floor and make a run for the artifact.",
+            "Examine the walls for clues to disarm the traps safely.",
+        ],
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/chamber_background.jpg"),
+            (screen_width, screen_height),
+        ),
+        "next_chapters": [6, 7],  # Corresponding to the choices
+    },
+    "chapter4": {
+        "text": "As Indiana secures the artifact, a rival archaeologist, Dr. Renegade, appears. He demands the artifact for himself and challenges Indiana to a duel. How will you confront Dr. Renegade?",
+        "choices": [
+            "Engage in a traditional fistfight to settle the dispute.",
+            "Outsmart him with your knowledge of ancient artifacts.",
+        ],
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/duel_background.jpg"),
+            (screen_width, screen_height),
+        ),
+        "next_chapters": [8, 9],  # Corresponding to the choices
+    },
+    "chapter5": {
+        "text": "With the artifact in hand, Pavi and Dr. Renegade trigger a collapsing mechanism within the temple. The exit is blocked, and time is running out. Select your escape route:",
+        "choices": [
+            "Navigate through a series of secret passages to find an alternative exit.",
+            "Use your whip to create a makeshift bridge and cross a dangerous gap.",
+        ],
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/escape_background.jpg"),
+            (screen_width, screen_height),
+        ),
+        "next_chapters": [10, 11],  # Corresponding to the choices
+    },
+    "epilogue": {
+        "text": "Indiana Jones successfully escapes the collapsing temple, leaving Dr. Renegade behind. The artifact is secured, and Indiana reflects on the thrilling adventure. How will you conclude this tale?",
+        "choices": [
+            "Return the artifact to a museum to share its history with the world.",
+            "Keep the artifact for yourself, unlocking its mysterious powers.",
+        ],
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/epilogue_background.jpg"),
+            (screen_width, screen_height),
+        ),
+        "next_chapters": [12, 13],  # Corresponding to the choices
+    },
 }
+
 
 def wrap_text(text, font, max_width):
     words = text.split()
@@ -94,21 +161,23 @@ def display_button(text, button_rect):
     screen.blit(button_text, (button_rect.x + button_rect.width // 2 - button_text.get_width() // 2,
                               button_rect.y + button_rect.height // 2 - button_text.get_height() // 2))
 
-def display_choices(choices):
-    choice_rects = []
+def display_choices(choices, choice_rects):
     total_width = len(choices) * 300 + (len(choices) - 1) * 10
     start_x = (screen_width - total_width) // 2
 
-    for i, choice in enumerate(choices):
+    for i, (choice, rect) in enumerate(zip(choices, choice_rects)):
         choice_text = font.render(choice, True, white)
-        rect = pygame.Rect(start_x + i * 310, screen_height - 70, 300, 50)
 
-        pygame.draw.rect(screen, black, rect)
-        screen.blit(choice_text, (rect.x + (300 - choice_text.get_width()) // 2, rect.y + (50 - choice_text.get_height()) // 2))
+        text_x = start_x + i * 310 + (300 - choice_text.get_width()) // 2
+        text_y = rect.y + (50 - choice_text.get_height()) // 2
 
-        choice_rects.append(rect)
+        button_surface = pygame.Surface((400, 50), pygame.SRCALPHA)
+        highlight = rect.collidepoint(pygame.mouse.get_pos())
+        pygame.draw.rect(button_surface, highlight_color if highlight else black, button_surface.get_rect())
+        screen.blit(button_surface, (start_x + i * 310, rect.y))
 
-    return choice_rects
+        screen.blit(choice_text, (text_x, text_y))
+
 
 def main():
     global current_screen, current_chapter
@@ -145,7 +214,9 @@ def main():
             display_text(chapter_data["text"], -50)
 
             if "choices" in chapter_data:
-                chapter_data["choice_rects"] = display_choices(chapter_data["choices"])
+                chapter_data["choice_rects"] = [pygame.Rect(screen_width // 2 - 150, screen_height - 100 + i * 60, 300, 50) for i in range(len(chapter_data["choices"]))]
+                display_choices(chapter_data["choices"], chapter_data["choice_rects"])
+
 
             elif "button_text" in chapter_data:
                 chapter_data["button_rect"] = pygame.Rect(screen_width // 2 - 150, screen_height - 100, 300, 50)
