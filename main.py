@@ -60,7 +60,7 @@ chapters = {
             "Consult the book which you brought with you",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/temple_background.jpg"),
+            pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [4, 5],  # Corresponding to the choices
@@ -72,7 +72,7 @@ chapters = {
             "Examine the walls for clues to disarm the traps safely.",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chamber_background.jpg"),
+            pygame.image.load("assets/images/chapter3.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [6, 7],  # Corresponding to the choices
@@ -84,7 +84,7 @@ chapters = {
             "Outsmart him with your knowledge of ancient artifacts.",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/duel_background.jpg"),
+            pygame.image.load("assets/images/chapter4.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [8, 9],  # Corresponding to the choices
@@ -96,7 +96,7 @@ chapters = {
             "Use your whip to create a makeshift bridge and cross a dangerous gap.",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/escape_background.jpg"),
+            pygame.image.load("assets/images/chapter5.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [10, 11],  # Corresponding to the choices
@@ -108,7 +108,7 @@ chapters = {
             "Keep the artifact for yourself, unlocking its mysterious powers.",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/epilogue_background.jpg"),
+            pygame.image.load("assets/images/chapter6.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [12, 13],  # Corresponding to the choices
