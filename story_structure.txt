@@ -1,11 +1,10 @@
-For our studio project we are creating a adventure game. we will be using html, css and javascript to complete this project. This project will have visual elements.
+"For our studio project we are creating a adventure game. we will be using pygame to complete this project. This project will have visual elements.
 It will be based on a character named Pavitra Prabhakar. In this game at every point Pavitra will be given a choice and whatever 
 he chooses will decide his fate in the game. This adventure game will be taking place in the Amazon forest. 
 Here are some must have features of the game:
-1. At the start of the game, pavitra will be given a choice to choose an item from four items that he will carry with him in his bag. This item is going to be helpfull.
-for him during his adventure. These choices will be displayed as cards from what he'll choose the item.
-2. The goal of Pavitra is to find an ancient artifact which is reciding inside an ancient temple on top of a hill.
-3. This game is to be completed before the sun sets. So the game should have a timer which will be visualised as if a sun is rising and eventually is leading towards getting set as the time passes.
+
+1. The goal of Pavitra is to find an ancient artifact which is residing inside an ancient temple deep inside a forest
+2. The game will have a health bar which will change based on his choices if his health hits 0 he loses the game but if it is above 0 till the last challenge then he wins.
 His story is given below
 **"Raiders of the Lost Artifact"**
 
@@ -25,19 +24,15 @@ Pavitra Prabhakar, renowned archaeologist and adventurer, Finds a cryptic messag
 
 *Select your path:*
 
-1. **Take the winding river route.**
-2. **Repel Down the Cliff**
+1. **Take the winding river route.** gives -5 health
+2. **Repel Down the Cliff** gives -10 health
 
 ---
 
 **Chapter 2: The Whispering Temple**
 
 He finds himself standing in front of an ancient temple hidden within the jungle. The entrance is adorned with strange symbols. A faint whispering sound echoes through the air.
-
-*Choose your next move:*
-
-1. **Decipher the symbols and enter through the main entrance.**
-2. **Consult the book which you brought with you**
+1. **Decipher the symbols and enter through the main entrance.** a mini deciphering game is here where if they don't get it in 3 chances they are given a choice to sacrifice 15 health or try again if they fail the 4th time then the game ends
 
 ---
 
@@ -47,8 +42,8 @@ Inside the temple, Pavitra encounters a vast chamber filled with shadows. In the
 
 *Make your decision:*
 
-1. **Brave the hidden spikes on the floor and make a run for the artifact.**
-2. **Examine the walls for clues to disarm the traps safely.**
+1. **Brave the hidden spikes on the floor and make a run for the artifact.** -10 health
+2. **Examine the walls for clues to disarm the traps safely.** another mini guess the pattern game if they cannot solve it in 3 tries they lose 15 health points 
 
 ---
 
@@ -58,8 +53,8 @@ As Indiana secures the artifact, a rival archaeologist, Dr. Renegade, appears. H
 
 *How will you confront Dr. Renegade?*
 
-1. **Engage in a traditional fistfight to settle the dispute.**
-2. **Outsmart him with your knowledge of ancient artifacts.**
+1. **Engage in a traditional fistfight to settle the dispute.** -20 health
+2. **Outsmart him with your knowledge of ancient artifacts.** mini trivia game
 
 ---
 
@@ -69,8 +64,8 @@ With the artifact in hand, Pavi and Dr. Renegade trigger a collapsing mechanism 
 
 *Select your escape route:*
 
-1. **Navigate through a series of secret passages to find an alternative exit.**
-2. **Use your whip to create a makeshift bridge and cross a dangerous gap.**
+1. **Navigate through a series of secret passages to find an alternative exit.** mini math game
+2. **Use your whip to create a makeshift bridge and cross a dangerous gap.** -10 health
 
 ---
 
@@ -85,4 +80,4 @@ Indiana Jones successfully escapes the collapsing temple, leaving Dr. Renegade b
 
 ---
 
-Your choices shape the outcome of this interactive Indiana Jones-style adventure! Enjoy the thrill of discovery and danger as you navigate through the twists and turns of the story. Unravel the secrets of the Scepter of Eternity and decide its fate in the modern world.
+Your choices shape the outcome of this interactive Indiana Jones-style adventure! Enjoy the thrill of discovery and danger as you navigate through the twists and turns of the story. Unravel the secrets of the Scepter of Eternity and decide its fate in the modern world."
