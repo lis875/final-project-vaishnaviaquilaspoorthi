@@ -3,13 +3,11 @@ import sys
 import textwrap
 import pygame.mixer
 
-
 # Initialize Pygame
 pygame.init()
 pygame.mixer.init()
 
 pygame.mixer.music.load("assets/intro_music.mp3")
-
 
 # Get the screen size
 screen_info = pygame.display.Info()
@@ -57,12 +55,10 @@ def wrap_text(text, font, max_width):
     current_line = []
 
     for word in words:
-        # Check the width of the line with the new word
         test_line = current_line + [word]
         test_text = ' '.join(test_line)
         text_width, _ = font.size(test_text)
 
-        # If the line exceeds the maximum width, start a new line
         if text_width <= max_width:
             current_line.append(word)
         else:
@@ -73,7 +69,7 @@ def wrap_text(text, font, max_width):
     return wrapped_lines
 
 def display_text(text, y_offset=0):
-    wrapped_text = wrap_text(text, font, screen_width - 400)  # Adjust the margin as needed
+    wrapped_text = wrap_text(text, font, screen_width - 400)
     text_surface = pygame.Surface((screen_width - 200, screen_height - 700), pygame.SRCALPHA)
     text_rect = text_surface.get_rect(center=(screen_width // 2, screen_height // 2 + y_offset))
 
@@ -85,25 +81,38 @@ def display_text(text, y_offset=0):
         text_surface.blit(line_surface, line_rect)
 
     black_rect = pygame.Surface((text_rect.width + 20, text_rect.height + 20), pygame.SRCALPHA)
-    pygame.draw.rect(black_rect, (0, 0, 0, 150), black_rect.get_rect())  # Adjust the alpha value (150) as needed
+    pygame.draw.rect(black_rect, (0, 0, 0, 150), black_rect.get_rect())
     screen.blit(black_rect, text_rect.topleft)
 
     screen.blit(text_surface, text_rect.topleft)
 
-
-
 def display_button(text, button_rect):
     button_text = font.render(text, True, white)
     
-    # Draw a background rectangle and check if the mouse is over it
     highlight = button_rect.collidepoint(pygame.mouse.get_pos())
     pygame.draw.rect(screen, highlight_color if highlight else black, button_rect)
     screen.blit(button_text, (button_rect.x + button_rect.width // 2 - button_text.get_width() // 2,
                               button_rect.y + button_rect.height // 2 - button_text.get_height() // 2))
 
+def display_choices(choices):
+    choice_rects = []
+    total_width = len(choices) * 300 + (len(choices) - 1) * 10
+    start_x = (screen_width - total_width) // 2
+
+    for i, choice in enumerate(choices):
+        choice_text = font.render(choice, True, white)
+        rect = pygame.Rect(start_x + i * 310, screen_height - 70, 300, 50)
+
+        pygame.draw.rect(screen, black, rect)
+        screen.blit(choice_text, (rect.x + (300 - choice_text.get_width()) // 2, rect.y + (50 - choice_text.get_height()) // 2))
+
+        choice_rects.append(rect)
+
+    return choice_rects
+
 def main():
     global current_screen, current_chapter
-    pygame.mixer.music.play(-1)  # The '-1' parameter means the music will loop indefinitely
+    pygame.mixer.music.play(-1)
 
     while True:
         for event in pygame.event.get():
@@ -116,13 +125,13 @@ def main():
                     pygame.quit()
                     sys.exit()
 
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Check for left mouse button click
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if current_screen in chapters:
                     chapter_data = chapters[current_screen]
 
                     if "button_rect" in chapter_data and chapter_data["button_rect"].collidepoint(pygame.mouse.get_pos()):
                         current_screen = chapter_data["next_screen"]
-                    
+
                     elif "choice_rects" in chapter_data:
                         for i, rect in enumerate(chapter_data["choice_rects"]):
                             if rect.collidepoint(pygame.mouse.get_pos()):
@@ -132,43 +141,19 @@ def main():
         if current_screen in chapters:
             chapter_data = chapters[current_screen]
 
-            # Display background image
             screen.blit(chapter_data["background"], (0, 0))
-
-            # Display chapter text with an offset
             display_text(chapter_data["text"], -50)
 
             if "choices" in chapter_data:
-                # Display choices as clickable buttons
-                chapter_data["choice_rects"] = [pygame.Rect(50, 150 + i * 50, 300, 50) for i in range(len(chapter_data["choices"]))]
-                display_choices(chapter_data["choices"], chapter_data["choice_rects"])
+                chapter_data["choice_rects"] = display_choices(chapter_data["choices"])
 
             elif "button_text" in chapter_data:
-                # Display a button
                 chapter_data["button_rect"] = pygame.Rect(screen_width // 2 - 150, screen_height - 100, 300, 50)
                 display_button(chapter_data["button_text"], chapter_data["button_rect"])
 
-        pygame.display.flip()
+            pygame.display.flip()
+
         clock.tick(30)
-
-def display_choices(choices, choice_rects):
-    total_width = len(choices) * 300 + (len(choices) - 1) * 10
-    start_x = (screen_width - total_width) // 2  # Center the choices horizontally
-
-    for i, (choice, rect) in enumerate(zip(choices, choice_rects)):
-        choice_text = font.render(choice, True, white)
-
-        # Calculate text position to center it within the button
-        text_x = start_x + i * 310 + (300 - choice_text.get_width()) // 2
-        text_y = screen_height - 70 - (50 - choice_text.get_height()) // 2
-
-        # Create a smaller surface to draw the background rectangle
-        button_surface = pygame.Surface((320, 50), pygame.SRCALPHA)
-        pygame.draw.rect(button_surface, highlight_color if rect.collidepoint(pygame.mouse.get_pos()) else black, button_surface.get_rect())
-        screen.blit(button_surface, (start_x + i * 310 + (300 - choice_text.get_width()) // 2, screen_height - 70 - (50 - choice_text.get_height()) // 2))
-
-        # Blit the choice text onto the screen
-        screen.blit(choice_text, (text_x, text_y))
 
 
 if __name__ == "__main__":
