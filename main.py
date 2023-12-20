@@ -39,24 +39,6 @@ current_chapter = 1
 
 health = 100  # Initial health
 
-# Mini-game functions
-def mini_deciphering_game():
-    # Implement the mini deciphering game logic here
-    pass
-
-def mini_guess_the_pattern_game():
-    # Implement the mini guess the pattern game logic here
-    pass
-
-def mini_trivia_game():
-    # Implement the mini trivia game logic here
-    pass
-
-def mini_math_game():
-    # Implement the mini math game logic here
-    pass
-
-# Function to handle health changes
 # Function to handle health changes
 def handle_health(health_change):
     global health
@@ -67,8 +49,6 @@ def handle_health(health_change):
 # Function to handle choices
 def handle_choice_function(health_change):
     handle_health(health_change)
-
-# Chapter data
 
 chapters = {
     "intro": {
@@ -81,99 +61,155 @@ chapters = {
         "next_screen": "chapter1",
     },
     "chapter1": {
-        "text": "You find a cryptic message leading you to the hidden temple. Select your path:",
-        "choices": [" Take the winding river route. (Lose 5 health) ", " Repel down the cliff. (Lose 10 health) "],
+        "text": "You find a cryptic message that will lead you to the hidden temple. Select your path:",
+        "choices": [" Take the winding river route.", " Repel down the cliff."],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/river_background.jpg"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [2, 3],
+        "next_chapters": [2, 4],
         "choice_functions": {
-            1: lambda: handle_choice_function(-5),
-            2: lambda: handle_choice_function(-10)
-        }
+            1: lambda: handle_choice_function(0),
+            2: lambda: handle_choice_function(0),
+        },
     },
     "chapter2": {
-        "text": "He finds himself standing in front of an ancient temple hidden within the jungle. The entrance is adorned with strange symbols. A faint whispering sound echoes through the air. Choose your next move:",
+        "text": "As Pavitra continues, the sound of a distant waterfall reaches his ears. A mystical aura surrounds the area, and a shimmering waterfall reveals a hidden cave. Choose your next move:",
         "choices": [
-            " Decipher the symbols and enter through the main entrance. (Mini deciphering game) ",
-            " Consult the book which you brought with you "
+            " Investigate the cave behind the waterfall, hoping it holds clues to the artifact's location ",
+            " Stay on course, wary of potential traps near the enchanting waterfall. ",
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [4, 5],
+        "next_chapters": [3],
         "choice_functions": {
-            1: mini_deciphering_game,
-            2: lambda: None  # Placeholder for the second choice
-        }
+            1: lambda: handle_choice_function(0),
+            2: lambda: handle_choice_function(-10),  # Placeholder for the second choice
+        },
     },
     "chapter3": {
-        "text": "Inside the temple, Pavitra encounters a vast chamber filled with shadows. In the center, a pedestal holds the artifact. However, a series of deadly traps guard the way. Make your decision:",
+        "text": "In the depths of the cave, Pavitra encounters ethereal guardian spirit. They offer guidance but pose a challenge to those seeking the artifact. Choose your next move:",
         "choices": [
-            " Brave the hidden spikes on the floor and make a run for the artifact. (Lose 10 health) ",
-            " Examine the walls for clues to disarm the traps safely. (Mini guess the pattern game) "
+            " Seek the spirits' guidance, accepting the challenges they present. ",
+            " Avoid the spirits and proceed cautiously, relying on your instincts. ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter3.png"),
+            pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [6, 7],
+        "next_chapters": [6],
         "choice_functions": {
-            1: lambda: handle_choice_function(-10),
-            2: mini_guess_the_pattern_game
-        }
+            1: lambda: handle_choice_function(+5),
+            2: lambda: handle_choice_function(0),  # Placeholder for the second choice
+        },
     },
     "chapter4": {
-        "text": "As Indiana secures the artifact, a rival archaeologist, Dr. Renegade, appears. He demands the artifact for himself and challenges Indiana to a duel. How will you confront Dr. Renegade?",
+        "text": "While exploring further, Pavitra discovers a concealed path veiled by overgrown vegetation. The path seems to lead deeper into the heart of the forest. Choose your next move:",
         "choices": [
-            " Engage in a traditional fistfight to settle the dispute. (Lose 20 health) ",
-            " Outsmart him with your knowledge of ancient artifacts. (Mini trivia game) "
+            " Follow the hidden path, intrigued by the possibility of finding secrets unknown. ",
+            " Stick to the original route, cautious of potential dangers. ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter4.png"),
+            pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [8, 9],
+        "next_chapters": [5],
         "choice_functions": {
-            1: lambda: handle_choice_function(-20),
-            2: mini_trivia_game
-        }
+            1: lambda: handle_choice_function(-5),
+            2: lambda: handle_choice_function(0),  # Placeholder for the second choice
+        },
     },
     "chapter5": {
-        "text": "With the artifact in hand, Pavi and Dr. Renegade trigger a collapsing mechanism within the temple. The exit is blocked, and time is running out. Select your escape route:",
+        "text": "Pavitra stumbles upon the journal of a lost explorer who had ventured into the jungle in search of the same artifact. The journal contains valuable insights .Choose your next move:",
         "choices": [
-            " Navigate through a series of secret passages to find an alternative exit. (Mini math game) ",
-            " Use your whip to create a makeshift bridge and cross a dangerous gap. (Lose 10 health) "
+            " Study the journal for clues that might aid your quest. ",
+            " Continue without delving into the journal, relying on your instincts. ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter5.png"),
+            pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [10, 11],
+        "next_chapters": [6],
         "choice_functions": {
-            1: mini_math_game,
-            2: lambda: handle_choice_function(-10)
-        }
+            1: lambda: handle_choice_function(10),
+            2: lambda: handle_choice_function(-15),  # Placeholder for the second choice
+        },
     },
-    "epilogue": {
-        "text": "Indiana Jones successfully escapes the collapsing temple, leaving Dr. Renegade behind. The artifact is secured, and Indiana reflects on the thrilling adventure. How will you conclude this tale?",
+    "chapter6": {
+        "text": "Inside the temple, Pavitra encounters a vast chamber filled with shadows. In the center, a pedestal holds the artifact. However, a series of deadly traps guard the way. Choose your next move:",
         "choices": [
-            " Return the artifact to a museum to share its history with the world. ",
-            " Keep the artifact for yourself, unlocking its mysterious powers. "
+            " Brave the hidden spikes on the floor and make a run for the artifact. ",
+            " Examine the walls for clues to disarm the traps safely. ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter6.png"),
+            pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [12, 13],
+        "next_chapters": [7],
         "choice_functions": {
-            1: lambda: None,  # Placeholder for the first choice
-            2: lambda: None   # Placeholder for the second choice
-        }
+            1: lambda: handle_choice_function(-10),
+            2: lambda: handle_choice_function(5),  # Placeholder for the second choice
+        },
     },
+    "chapter7": {
+        "text": "As Pavitra finds the Stone embedded in the wall, he notices the cracks on the ancient painted walls that are held together by the stone. A question is written below the stone. Only if you give the right answer will you be allowed to take the stone. \n 'Eternal, yet fleeting, it marches with might, Leaving its mark, conquering all fears.' What am I?" ,
+        "choices": [
+            "  'Time' ",
+            " 'Power' ",
+        ],
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/chapter2.png"),
+            (screen_width, screen_height),
+        ),
+        "next_chapters": [8],
+        "choice_functions": {
+            1: lambda: handle_choice_function(0),
+            2: lambda: handle_choice_function(-30),
+        },
+    },
+    "chapter8": {
+        "text": "As Pavitra secures the artifact, a collapsing mechanism is triggered within the temple. The exit is blocked, and time is running out.",
+        "choices": [
+            " Navigate through a series of secret passages to find an alternative exit.",
+            " Use your whip to create a makeshift bridge and cross a dangerous gap. ",
+        ],
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/chapter2.png"),
+            (screen_width, screen_height),
+        ),
+        "next_chapters": [9],
+        "choice_functions": {
+            1: lambda: handle_choice_function(0),
+            2: lambda: handle_choice_function(-5),
+        },
+    },
+    "chapter9": {
+        "text": "With the artifact in hand, Pavi dodges an attack that his arch-rival initiates as he tries to snatch the stone.",
+        "choices": [
+            " Use the power of the stone on Dr. Gunda ",
+            " Engage in hand-to-hand combat ",
+        ],
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/chapter2.png"),
+            (screen_width, screen_height),
+        ),
+        "next_chapters": [10],
+        "choice_functions": {
+            1: lambda: handle_choice_function(10),
+            2: lambda: handle_choice_function(-10),
+        },
+    },
+    "chaoter10": {
+        "text": "Pavitra Prabhakar successfully escapes the collapsing temple and Dr. Gunda. The artifact is secured, and Pavitra reflects on the thrilling adventure.",
+        "background": pygame.transform.scale(
+            pygame.image.load("assets/images/chapter2.png"),
+            (screen_width, screen_height),
+        ),
+    }
 }
+
 
 
 def wrap_text(text, font, max_width):
