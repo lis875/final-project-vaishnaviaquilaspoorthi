@@ -1,4 +1,7 @@
-"For our studio project we are creating a adventure game. we will be using pygame to complete this project. This project will have visual elements.
+LIS 875 Final project
+Team Members: Aquila Peeran, Spoorthi Veeresh Kumar, Vaishnavi Kale
+Github Link: https://github.com/lis875/final-project-vaishnaviaquilaspoorthi
+"For our studio project we are creating a adventure game. we will be using pygame to complete this project. This project will have audio & visual elements.
 It will be based on a character named Pavitra Prabhakar. In this game at every point Pavitra will be given a choice and whatever 
 he chooses will decide his fate in the game. This adventure game will be taking place in the Amazon forest. 
 Here are some must have features of the game:
