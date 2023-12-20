@@ -43,12 +43,12 @@ health = 100  # Initial health
 # Load map image
 # Load map image
 map_image = pygame.transform.scale(
-    pygame.image.load("assets/images/map_screen.jpg"),
+    pygame.image.load("assets/images/explorer_book.jpg"),
     (screen_width, screen_height)
 )
 
 # Create a rect for the map button
-map_button_rect = pygame.Rect(screen_width - 70, screen_height - 70, 50, 50)
+map_button_rect = pygame.Rect(screen_width - 70, screen_height - 70, 70, 50)
 map_button_text = font.render("MAP", True, white)
 
 close_button_width, close_button_height = 50, 50
@@ -214,7 +214,7 @@ chapters = {
         },
     },
     "chapter9": {
-        "text": "With the artifact in hand, Pavi dodges an attack that his arch-rival initiates as he tries to snatch the stone.",
+        "text": "With the artifact in hand, Pavitra dodges an attack that his arch-rival initiates as he tries to snatch the stone.",
         "choices": [
             " Use the power of the stone on Dr. Gunda ",
             " Engage in hand-to-hand combat ",
@@ -230,7 +230,7 @@ chapters = {
         },
     },
     "chapter10": {
-        "text": "Pavitra Prabhakar successfully escapes the collapsing temple and Dr. Gunda. The artifact is secured, and Pavitra reflects on the thrilling adventure.",
+        "text": "Pavitra Prabhakar successfully escapes the collapsing temple and Dr. Gunda. The artifact is secured, and Pavitra reflects on the thrilling adventure.\n Press Escape Key to Continue your adventure IRL",
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
