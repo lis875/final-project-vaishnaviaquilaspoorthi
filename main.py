@@ -272,10 +272,10 @@ def display_health_bar():
     # Calculate color based on health value
     if health > 60:
         color = green
-        text_color = white  # Set text color to white for green health
+        text_color = black  # Set text color to white for green health
     elif 20 <= health <= 60:
         color = orange
-        text_color = black  # Set text color to black for orange health
+        text_color = white  # Set text color to black for orange health
     else:
         color = red
         text_color = white  # Set text color to white for red health
@@ -368,6 +368,13 @@ def main():
                         previous_screen = current_screen
                         current_screen = "map"
 
+                elif current_screen == "map":
+                    # Check if the close button on the map screen is clicked
+                    if close_button_rect.collidepoint(pygame.mouse.get_pos()):
+                        # Close the map screen
+                        map_displayed = False
+                        current_screen = previous_screen
+
                 elif current_screen in chapters:
                     chapter_data = chapters[current_screen]
 
@@ -382,6 +389,7 @@ def main():
 
                                 # Add the following line to handle the choice and update the health bar
                                 handle_choice(chapter_data, i + 1)
+
 
                     elif "choices" in chapter_data and "button_rect" not in chapter_data:
                         # Handle case where choices are displayed without a button
