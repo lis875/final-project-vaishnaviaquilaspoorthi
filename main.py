@@ -67,7 +67,7 @@ chapters = {
             pygame.image.load("assets/images/river_background.jpg"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [2, 4],
+        "next_chapters": [2,4],
         "choice_functions": {
             1: lambda: handle_choice_function(0),
             2: lambda: handle_choice_function(0),
@@ -83,10 +83,10 @@ chapters = {
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [3],
+        "next_chapters": [3,3],
         "choice_functions": {
             1: lambda: handle_choice_function(0),
-            2: lambda: handle_choice_function(-10),  # Placeholder for the second choice
+            2: lambda: handle_choice_function(-10), 
         },
     },
     "chapter3": {
@@ -99,7 +99,7 @@ chapters = {
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [6],
+        "next_chapters": [6,6],
         "choice_functions": {
             1: lambda: handle_choice_function(+5),
             2: lambda: handle_choice_function(0),  # Placeholder for the second choice
@@ -115,7 +115,7 @@ chapters = {
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [5],
+        "next_chapters": [5,5],
         "choice_functions": {
             1: lambda: handle_choice_function(-5),
             2: lambda: handle_choice_function(0),  # Placeholder for the second choice
@@ -131,7 +131,7 @@ chapters = {
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [6],
+        "next_chapters": [6,6],
         "choice_functions": {
             1: lambda: handle_choice_function(10),
             2: lambda: handle_choice_function(-15),  # Placeholder for the second choice
@@ -147,7 +147,7 @@ chapters = {
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [7],
+        "next_chapters": [7,7],
         "choice_functions": {
             1: lambda: handle_choice_function(-10),
             2: lambda: handle_choice_function(5),  # Placeholder for the second choice
@@ -163,7 +163,7 @@ chapters = {
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [8],
+        "next_chapters": [8,8],
         "choice_functions": {
             1: lambda: handle_choice_function(0),
             2: lambda: handle_choice_function(-30),
@@ -179,7 +179,7 @@ chapters = {
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [9],
+        "next_chapters": [9,9],
         "choice_functions": {
             1: lambda: handle_choice_function(0),
             2: lambda: handle_choice_function(-5),
@@ -195,7 +195,7 @@ chapters = {
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
         ),
-        "next_chapters": [10],
+        "next_chapters": [10,10],
         "choice_functions": {
             1: lambda: handle_choice_function(10),
             2: lambda: handle_choice_function(-10),
@@ -230,9 +230,6 @@ def wrap_text(text, font, max_width):
 
     wrapped_lines.append(' '.join(current_line))
     return wrapped_lines
-
-
-# ... (remaining code)
 
 def display_health_bar():
     # Calculate health bar dimensions
