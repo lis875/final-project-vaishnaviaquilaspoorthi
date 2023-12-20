@@ -43,7 +43,7 @@ health = 100  # Initial health
 # Load map image
 # Load map image
 map_image = pygame.transform.scale(
-    pygame.image.load("assets/images/explorer_book.jpg"),
+    pygame.image.load("assets/images/map_screen.jpeg"),
     (screen_width, screen_height)
 )
 
@@ -83,7 +83,7 @@ chapters = {
         "text": "Welcome to Raiders of the Lost Artifact! Your goal is to find the ancient Scepter of Eternity hidden deep within the Amazon rainforest. Make choices to navigate through the challenges and uncover the mysteries.",
         "button_text": "  Start  ",
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/intro_background.jpg"),
+            pygame.image.load("assets/images/intro.png"),
             (screen_width, screen_height),
         ),
         "next_screen": "chapter1",
@@ -108,7 +108,7 @@ chapters = {
             " Stay on course, wary of potential traps near the enchanting waterfall. ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter2.png"),
+            pygame.image.load("assets/images/enchantedwaterfall.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [3,3],
@@ -124,7 +124,7 @@ chapters = {
             " Avoid the spirits and proceed cautiously, relying on your instincts. ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter2.png"),
+            pygame.image.load("assets/images/Guardian.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [6,6],
@@ -156,7 +156,7 @@ chapters = {
             " Continue without delving into the journal, relying on your instincts. ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter2.png"),
+            pygame.image.load("assets/images/mini_deciphering.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [6,6],
@@ -172,7 +172,7 @@ chapters = {
             " Examine the walls for clues to disarm the traps safely. ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter2.png"),
+            pygame.image.load("assets/images/chapter4.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [7,7],
@@ -188,7 +188,7 @@ chapters = {
             " 'Power' ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter2.png"),
+            pygame.image.load("assets/images/chapter3.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [8,8],
@@ -204,7 +204,7 @@ chapters = {
             " Use your whip to create a makeshift bridge and cross a dangerous gap. ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter2.png"),
+            pygame.image.load("assets/images/chapter6.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [9,9],
@@ -220,7 +220,7 @@ chapters = {
             " Engage in hand-to-hand combat ",
         ],
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter2.png"),
+            pygame.image.load("assets/images/chapter5.png"),
             (screen_width, screen_height),
         ),
         "next_chapters": [10,10],
@@ -230,9 +230,9 @@ chapters = {
         },
     },
     "chapter10": {
-        "text": "Pavitra Prabhakar successfully escapes the collapsing temple and Dr. Gunda. The artifact is secured, and Pavitra reflects on the thrilling adventure.\n Press Escape Key to Continue your adventure IRL",
+        "text": "Pavitra Prabhakar successfully escapes the collapsing temple and Dr. Gunda. The artifact is secured, and Pavitra reflects on the thrilling adventure. Press Escape to continue your adventure IRL :)",
         "background": pygame.transform.scale(
-            pygame.image.load("assets/images/chapter2.png"),
+            pygame.image.load("assets/images/ending_screen.jpg"),
             (screen_width, screen_height),
         ),
     }
