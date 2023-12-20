@@ -22,9 +22,13 @@ pygame.display.set_caption("Raiders of the Lost Artifact")
 white = (255, 255, 255)
 black = (0, 0, 0)
 highlight_color = (150, 150, 150)
+blue = (33, 116, 115)  # New color for the button
+green = (0, 255, 0)
+orange = (255, 165, 0)
+red = (255, 0, 0)
 
 # Fonts
-font = pygame.font.Font(None, 36)
+font = pygame.font.Font(None, 48)
 
 # Game clock
 clock = pygame.time.Clock()
@@ -53,24 +57,23 @@ def mini_math_game():
     pass
 
 # Function to handle health changes
+# Function to handle health changes
 def handle_health(health_change):
     global health
     health += health_change
+    # Ensure health stays within [0, 100] range
+    health = max(0, min(health, 100))
 
 # Function to handle choices
-def handle_choice(chapter_data, choice_number):
-    choice_function = chapter_data.get("choice_functions", {}).get(choice_number)
-    
-    if choice_function:
-        # Call the specified function for the chosen choice
-        choice_function()
+def handle_choice_function(health_change):
+    handle_health(health_change)
 
 # Chapter data
 
 chapters = {
     "intro": {
         "text": "Welcome to Raiders of the Lost Artifact! Your goal is to find the ancient Scepter of Eternity hidden deep within the Amazon rainforest. Make choices to navigate through the challenges and uncover the mysteries.",
-        "button_text": "Start",
+        "button_text": "  Start  ",
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/intro_background.jpg"),
             (screen_width, screen_height),
@@ -79,22 +82,22 @@ chapters = {
     },
     "chapter1": {
         "text": "You find a cryptic message leading you to the hidden temple. Select your path:",
-        "choices": ["Take the winding river route. (Lose 5 health)", "Repel down the cliff. (Lose 10 health)"],
+        "choices": [" Take the winding river route. (Lose 5 health) ", " Repel down the cliff. (Lose 10 health) "],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/river_background.jpg"),
             (screen_width, screen_height),
         ),
         "next_chapters": [2, 3],
         "choice_functions": {
-            1: lambda: handle_health(-5),
-            2: lambda: handle_health(-10)
+            1: lambda: handle_choice_function(-5),
+            2: lambda: handle_choice_function(-10)
         }
     },
     "chapter2": {
         "text": "He finds himself standing in front of an ancient temple hidden within the jungle. The entrance is adorned with strange symbols. A faint whispering sound echoes through the air. Choose your next move:",
         "choices": [
-            "Decipher the symbols and enter through the main entrance. (Mini deciphering game)",
-            "Consult the book which you brought with you"
+            " Decipher the symbols and enter through the main entrance. (Mini deciphering game) ",
+            " Consult the book which you brought with you "
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter2.png"),
@@ -109,8 +112,8 @@ chapters = {
     "chapter3": {
         "text": "Inside the temple, Pavitra encounters a vast chamber filled with shadows. In the center, a pedestal holds the artifact. However, a series of deadly traps guard the way. Make your decision:",
         "choices": [
-            "Brave the hidden spikes on the floor and make a run for the artifact. (Lose 10 health)",
-            "Examine the walls for clues to disarm the traps safely. (Mini guess the pattern game)"
+            " Brave the hidden spikes on the floor and make a run for the artifact. (Lose 10 health) ",
+            " Examine the walls for clues to disarm the traps safely. (Mini guess the pattern game) "
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter3.png"),
@@ -118,15 +121,15 @@ chapters = {
         ),
         "next_chapters": [6, 7],
         "choice_functions": {
-            1: lambda: handle_health(-10),
+            1: lambda: handle_choice_function(-10),
             2: mini_guess_the_pattern_game
         }
     },
     "chapter4": {
         "text": "As Indiana secures the artifact, a rival archaeologist, Dr. Renegade, appears. He demands the artifact for himself and challenges Indiana to a duel. How will you confront Dr. Renegade?",
         "choices": [
-            "Engage in a traditional fistfight to settle the dispute. (Lose 20 health)",
-            "Outsmart him with your knowledge of ancient artifacts. (Mini trivia game)"
+            " Engage in a traditional fistfight to settle the dispute. (Lose 20 health) ",
+            " Outsmart him with your knowledge of ancient artifacts. (Mini trivia game) "
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter4.png"),
@@ -134,15 +137,15 @@ chapters = {
         ),
         "next_chapters": [8, 9],
         "choice_functions": {
-            1: lambda: handle_health(-20),
+            1: lambda: handle_choice_function(-20),
             2: mini_trivia_game
         }
     },
     "chapter5": {
         "text": "With the artifact in hand, Pavi and Dr. Renegade trigger a collapsing mechanism within the temple. The exit is blocked, and time is running out. Select your escape route:",
         "choices": [
-            "Navigate through a series of secret passages to find an alternative exit. (Mini math game)",
-            "Use your whip to create a makeshift bridge and cross a dangerous gap. (Lose 10 health)"
+            " Navigate through a series of secret passages to find an alternative exit. (Mini math game) ",
+            " Use your whip to create a makeshift bridge and cross a dangerous gap. (Lose 10 health) "
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter5.png"),
@@ -151,14 +154,14 @@ chapters = {
         "next_chapters": [10, 11],
         "choice_functions": {
             1: mini_math_game,
-            2: lambda: handle_health(-10)
+            2: lambda: handle_choice_function(-10)
         }
     },
     "epilogue": {
         "text": "Indiana Jones successfully escapes the collapsing temple, leaving Dr. Renegade behind. The artifact is secured, and Indiana reflects on the thrilling adventure. How will you conclude this tale?",
         "choices": [
-            "Return the artifact to a museum to share its history with the world.",
-            "Keep the artifact for yourself, unlocking its mysterious powers."
+            " Return the artifact to a museum to share its history with the world. ",
+            " Keep the artifact for yourself, unlocking its mysterious powers. "
         ],
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter6.png"),
@@ -192,6 +195,36 @@ def wrap_text(text, font, max_width):
     wrapped_lines.append(' '.join(current_line))
     return wrapped_lines
 
+
+# ... (remaining code)
+
+def display_health_bar():
+    # Calculate health bar dimensions
+    health_bar_width = screen_width - 40
+    health_bar_height = 20
+    health_bar_x = 20
+    health_bar_y = 20
+
+    # Calculate color based on health value
+    if health > 60:
+        color = green
+    elif 20 <= health <= 60:
+        color = orange
+    else:
+        color = red
+
+    # Draw health bar background
+    pygame.draw.rect(screen, black, (health_bar_x, health_bar_y, health_bar_width, health_bar_height))
+    # Draw health bar
+    pygame.draw.rect(screen, color, (health_bar_x, health_bar_y, health, health_bar_height))
+
+    # Display health value
+    health_text = font.render(f"Health: {health}", True, white)
+    screen.blit(health_text, (health_bar_x + health_bar_width + 10, health_bar_y))
+
+
+
+
 def display_text(text, y_offset=0):
     wrapped_text = wrap_text(text, font, screen_width - 400)
     text_surface = pygame.Surface((screen_width - 200, screen_height - 700), pygame.SRCALPHA)
@@ -210,34 +243,36 @@ def display_text(text, y_offset=0):
 
     screen.blit(text_surface, text_rect.topleft)
 
-def display_button(text, button_rect):
-    button_text = font.render(text, True, white)
-    
-    highlight = button_rect.collidepoint(pygame.mouse.get_pos())
-    pygame.draw.rect(screen, highlight_color if highlight else black, button_rect)
-    screen.blit(button_text, (button_rect.x + button_rect.width // 2 - button_text.get_width() // 2,
-                              button_rect.y + button_rect.height // 2 -
-    button_text.get_height() // 2))
 
+# Inside display_choices function
 def display_choices(choices, choice_rects):
+    padding_x = 10  # Adjust the padding value as needed
+    padding_y = 5  # Adjust the padding value as needed
+
     total_width = len(choices) * 300 + (len(choices) - 1) * 10
     start_x = (screen_width - total_width) // 2
 
     for i, (choice, rect) in enumerate(zip(choices, choice_rects)):
         choice_text = font.render(choice, True, white)
 
-        text_x = start_x + i * 310 + (300 - choice_text.get_width()) // 2
-        text_y = rect.y + (50 - choice_text.get_height()) // 2
+        # Adjust the choice_rect to include padding
+        choice_rect = pygame.Rect(
+            start_x + i * 310 - padding_x,
+            rect.y - padding_y,
+            choice_text.get_width() + 2 * padding_x,
+            choice_text.get_height() + 2 * padding_y
+        )
 
         button_surface = pygame.Surface((400, 50), pygame.SRCALPHA)
-        highlight = rect.collidepoint(pygame.mouse.get_pos())
+        highlight = choice_rect.collidepoint(pygame.mouse.get_pos())
         pygame.draw.rect(button_surface, highlight_color if highlight else black, button_surface.get_rect())
         screen.blit(button_surface, (start_x + i * 310, rect.y))
 
-        screen.blit(choice_text, (text_x, text_y))
+        screen.blit(choice_text, (choice_rect.x + padding_x, choice_rect.y + padding_y))
+
 
 def main():
-    global current_screen, current_chapter
+    global current_screen, current_chapter, health
     pygame.mixer.music.play(-1)
 
     while True:
@@ -270,18 +305,25 @@ def main():
             screen.blit(chapter_data["background"], (0, 0))
             display_text(chapter_data["text"], -50)
 
+            display_health_bar()  # Add this line to display the health bar
+
             if "choices" in chapter_data:
                 chapter_data["choice_rects"] = []
                 for i, choice in enumerate(chapter_data["choices"]):
                     choice_text = font.render(choice, True, white)
-                    choice_rect = pygame.Rect(screen_width // 2 - choice_text.get_width() // 2,
-                                              screen_height - 100 + i * (choice_text.get_height() + 10),
-                                              choice_text.get_width(),
-                                              choice_text.get_height())
+                    choice_rect = pygame.Rect(
+                        screen_width // 2 - choice_text.get_width() // 2,
+                        screen_height - 100 + i * (choice_text.get_height() + 10),
+                        choice_text.get_width(),
+                        choice_text.get_height()
+                    )
                     chapter_data["choice_rects"].append(choice_rect)
-                    pygame.draw.rect(screen, (0, 0, 0), choice_rect, 0)
-                    pygame.draw.rect(screen, (255, 255, 255), choice_rect, 2)
-                    screen.blit(choice_text, (choice_rect.x, choice_rect.y))
+
+                for i, rect in enumerate(chapter_data["choice_rects"]):
+                    highlight = rect.collidepoint(pygame.mouse.get_pos())
+                    pygame.draw.rect(screen, blue if highlight else (0, 0, 0), rect, 0)
+                    pygame.draw.rect(screen, (255, 255, 255), rect, 2)
+                    screen.blit(font.render(chapter_data["choices"][i], True, white), (rect.x, rect.y))
 
             elif "button_text" in chapter_data:
                 button_text = font.render(chapter_data["button_text"], True, white)
@@ -295,7 +337,7 @@ def main():
                 highlight = button_rect.collidepoint(pygame.mouse.get_pos())
 
                 # Change the button color when hovering
-                pygame.draw.rect(screen, highlight_color if highlight else (0, 0, 0), button_rect, 0)
+                pygame.draw.rect(screen, blue if highlight else (0, 0, 0), button_rect, 0)
                 pygame.draw.rect(screen, (255, 255, 255), button_rect, 2)
                 screen.blit(button_text, (button_rect.x, button_rect.y))
 
