@@ -28,7 +28,7 @@ orange = (255, 165, 0)
 red = (255, 0, 0)
 
 # Fonts
-font = pygame.font.Font(None, 48)
+font = pygame.font.Font(None, 36)
 
 # Game clock
 clock = pygame.time.Clock()
@@ -56,17 +56,26 @@ def mini_math_game():
     # Implement the mini math game logic here
     pass
 
-# Function to handle health changes
-# Function to handle health changes
 def handle_health(health_change):
     global health
     health += health_change
     # Ensure health stays within [0, 100] range
     health = max(0, min(health, 100))
 
+# Function to handle health changes
+# Function to handle health changes
+def handle_choice(chapter_data, choice_number):
+    choice_function = chapter_data.get("choice_functions", {}).get(choice_number)
+
+    if choice_function:
+        choice_function()  # Call the specified function for the chosen choice
+        display_health_bar()  # Update the health bar after the choice is made
+
+
 # Function to handle choices
 def handle_choice_function(health_change):
     handle_health(health_change)
+
 
 # Chapter data
 
@@ -200,7 +209,7 @@ def wrap_text(text, font, max_width):
 
 def display_health_bar():
     # Calculate health bar dimensions
-    health_bar_width = screen_width - 40
+    health_bar_width = int((health / 100) * (screen_width - 40))
     health_bar_height = 20
     health_bar_x = 20
     health_bar_y = 20
@@ -208,21 +217,25 @@ def display_health_bar():
     # Calculate color based on health value
     if health > 60:
         color = green
+        text_color = white  # Set text color to white for green health
     elif 20 <= health <= 60:
         color = orange
+        text_color = black  # Set text color to black for orange health
     else:
         color = red
+        text_color = white  # Set text color to white for red health
 
     # Draw health bar background
-    pygame.draw.rect(screen, black, (health_bar_x, health_bar_y, health_bar_width, health_bar_height))
+    pygame.draw.rect(screen, black, (health_bar_x, health_bar_y, screen_width - 40, health_bar_height))
     # Draw health bar
-    pygame.draw.rect(screen, color, (health_bar_x, health_bar_y, health, health_bar_height))
+    pygame.draw.rect(screen, color, (health_bar_x, health_bar_y, health_bar_width, health_bar_height))
 
-    # Display health value
-    health_text = font.render(f"Health: {health}", True, white)
-    screen.blit(health_text, (health_bar_x + health_bar_width + 10, health_bar_y))
-
-
+    # Display health value with the specified text color
+    health_text = font.render(f"Health: {health}", True, text_color)
+    
+    # Adjust the x-coordinate to place the text within the health bar
+    text_x = health_bar_x + (health_bar_width - health_text.get_width()) / 2
+    screen.blit(health_text, (text_x, health_bar_y))
 
 
 def display_text(text, y_offset=0):
@@ -298,6 +311,10 @@ def main():
                             if rect.collidepoint(pygame.mouse.get_pos()):
                                 current_chapter = chapter_data["next_chapters"][i]
                                 current_screen = f"chapter{current_chapter}"
+                                
+                                # Add the following line to handle the choice and update the health bar
+                                handle_choice(chapter_data, i + 1)
+
 
         if current_screen in chapters:
             chapter_data = chapters[current_screen]
