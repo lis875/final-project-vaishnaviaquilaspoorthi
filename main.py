@@ -236,7 +236,6 @@ def display_choices(choices, choice_rects):
 
         screen.blit(choice_text, (text_x, text_y))
 
-
 def main():
     global current_screen, current_chapter
     pygame.mixer.music.play(-1)
@@ -272,17 +271,37 @@ def main():
             display_text(chapter_data["text"], -50)
 
             if "choices" in chapter_data:
-                chapter_data["choice_rects"] = [pygame.Rect(screen_width // 2 - 150, screen_height - 100 + i * 60, 300, 50) for i in range(len(chapter_data["choices"]))]
-                display_choices(chapter_data["choices"], chapter_data["choice_rects"])
+                chapter_data["choice_rects"] = []
+                for i, choice in enumerate(chapter_data["choices"]):
+                    choice_text = font.render(choice, True, white)
+                    choice_rect = pygame.Rect(screen_width // 2 - choice_text.get_width() // 2,
+                                              screen_height - 100 + i * (choice_text.get_height() + 10),
+                                              choice_text.get_width(),
+                                              choice_text.get_height())
+                    chapter_data["choice_rects"].append(choice_rect)
+                    pygame.draw.rect(screen, (0, 0, 0), choice_rect, 0)
+                    pygame.draw.rect(screen, (255, 255, 255), choice_rect, 2)
+                    screen.blit(choice_text, (choice_rect.x, choice_rect.y))
 
             elif "button_text" in chapter_data:
-                chapter_data["button_rect"] = pygame.Rect(screen_width // 2 - 150, screen_height - 100, 300, 50)
-                display_button(chapter_data["button_text"], chapter_data["button_rect"])
+                button_text = font.render(chapter_data["button_text"], True, white)
+                button_rect = pygame.Rect(screen_width // 2 - button_text.get_width() // 2,
+                                          screen_height - 100,
+                                          button_text.get_width(),
+                                          button_text.get_height())
+                chapter_data["button_rect"] = button_rect
+
+                # Check if the mouse is over the button
+                highlight = button_rect.collidepoint(pygame.mouse.get_pos())
+
+                # Change the button color when hovering
+                pygame.draw.rect(screen, highlight_color if highlight else (0, 0, 0), button_rect, 0)
+                pygame.draw.rect(screen, (255, 255, 255), button_rect, 2)
+                screen.blit(button_text, (button_rect.x, button_rect.y))
 
             pygame.display.flip()
 
         clock.tick(30)
-
 
 if __name__ == "__main__":
     main()
