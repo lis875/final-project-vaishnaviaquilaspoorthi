@@ -48,7 +48,7 @@ map_image = pygame.transform.scale(
 )
 
 # Create a rect for the map button
-map_button_rect = pygame.Rect(screen_width - 70, screen_height - 70, 50, 50)
+map_button_rect = pygame.Rect(screen_width - 70, screen_height - 70, 70, 50)
 map_button_text = font.render("MAP", True, white)
 
 close_button_width, close_button_height = 50, 50
@@ -230,7 +230,7 @@ chapters = {
         },
     },
     "chapter10": {
-        "text": "Pavitra Prabhakar successfully escapes the collapsing temple and Dr. Gunda. The artifact is secured, and Pavitra reflects on the thrilling adventure.",
+        "text": "Pavitra Prabhakar successfully escapes the collapsing temple and Dr. Gunda. The artifact is secured, and Pavitra reflects on the thrilling adventure. Press Escape to continue your adventure IRL :)",
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter2.png"),
             (screen_width, screen_height),
