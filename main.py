@@ -201,7 +201,7 @@ chapters = {
             2: lambda: handle_choice_function(-10),
         },
     },
-    "chaoter10": {
+    "chapter10": {
         "text": "Pavitra Prabhakar successfully escapes the collapsing temple and Dr. Gunda. The artifact is secured, and Pavitra reflects on the thrilling adventure.",
         "background": pygame.transform.scale(
             pygame.image.load("assets/images/chapter2.png"),
