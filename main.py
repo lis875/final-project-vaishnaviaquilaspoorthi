@@ -28,7 +28,7 @@ orange = (255, 165, 0)
 red = (255, 0, 0)
 
 # Fonts
-font = pygame.font.Font(None, 48)
+font = pygame.font.Font(None, 36)
 
 # Game clock
 clock = pygame.time.Clock()
@@ -39,16 +39,44 @@ current_chapter = 1
 
 health = 100  # Initial health
 
-# Function to handle health changes
+# Mini-game functions
+# Load map image
+# Load map image
+map_image = pygame.transform.scale(
+    pygame.image.load("assets/images/map_screen.jpg"),
+    (screen_width, screen_height)
+)
+
+# Create a rect for the map button
+map_button_rect = pygame.Rect(screen_width - 70, screen_height - 70, 50, 50)
+map_button_text = font.render("MAP", True, white)
+
+close_button_width, close_button_height = 50, 50
+close_button_rect = pygame.Rect(screen_width - close_button_width - 20, 20, close_button_width, close_button_height)
+close_button_text = font.render("X", True, white)
+
 def handle_health(health_change):
     global health
     health += health_change
     # Ensure health stays within [0, 100] range
     health = max(0, min(health, 100))
 
+# Function to handle health changes
+# Function to handle health changes
+def handle_choice(chapter_data, choice_number):
+    choice_function = chapter_data.get("choice_functions", {}).get(choice_number)
+
+    if choice_function:
+        choice_function()  # Call the specified function for the chosen choice
+        display_health_bar()  # Update the health bar after the choice is made
+
+
 # Function to handle choices
 def handle_choice_function(health_change):
     handle_health(health_change)
+
+
+# Chapter data
 
 chapters = {
     "intro": {
@@ -70,7 +98,7 @@ chapters = {
         "next_chapters": [2,4],
         "choice_functions": {
             1: lambda: handle_choice_function(0),
-            2: lambda: handle_choice_function(0),
+            2: lambda: handle_choice_function(-10),
         },
     },
     "chapter2": {
@@ -85,7 +113,7 @@ chapters = {
         ),
         "next_chapters": [3,3],
         "choice_functions": {
-            1: lambda: handle_choice_function(0),
+            1: lambda: handle_choice_function(-5),
             2: lambda: handle_choice_function(-10), 
         },
     },
@@ -101,7 +129,7 @@ chapters = {
         ),
         "next_chapters": [6,6],
         "choice_functions": {
-            1: lambda: handle_choice_function(+5),
+            1: lambda: handle_choice_function(-5),
             2: lambda: handle_choice_function(0),  # Placeholder for the second choice
         },
     },
@@ -118,7 +146,7 @@ chapters = {
         "next_chapters": [5,5],
         "choice_functions": {
             1: lambda: handle_choice_function(-5),
-            2: lambda: handle_choice_function(0),  # Placeholder for the second choice
+            2: lambda: handle_choice_function(-20),  # Placeholder for the second choice
         },
     },
     "chapter5": {
@@ -133,7 +161,7 @@ chapters = {
         ),
         "next_chapters": [6,6],
         "choice_functions": {
-            1: lambda: handle_choice_function(10),
+            1: lambda: handle_choice_function(-10),
             2: lambda: handle_choice_function(-15),  # Placeholder for the second choice
         },
     },
@@ -150,7 +178,7 @@ chapters = {
         "next_chapters": [7,7],
         "choice_functions": {
             1: lambda: handle_choice_function(-10),
-            2: lambda: handle_choice_function(5),  # Placeholder for the second choice
+            2: lambda: handle_choice_function(-5),  # Placeholder for the second choice
         },
     },
     "chapter7": {
@@ -197,7 +225,7 @@ chapters = {
         ),
         "next_chapters": [10,10],
         "choice_functions": {
-            1: lambda: handle_choice_function(10),
+            1: lambda: handle_choice_function(-10),
             2: lambda: handle_choice_function(-10),
         },
     },
@@ -233,7 +261,7 @@ def wrap_text(text, font, max_width):
 
 def display_health_bar():
     # Calculate health bar dimensions
-    health_bar_width = screen_width - 40
+    health_bar_width = int((health / 100) * (screen_width - 40))
     health_bar_height = 20
     health_bar_x = 20
     health_bar_y = 20
@@ -241,21 +269,25 @@ def display_health_bar():
     # Calculate color based on health value
     if health > 60:
         color = green
+        text_color = black  # Set text color to white for green health
     elif 20 <= health <= 60:
         color = orange
+        text_color = white  # Set text color to black for orange health
     else:
         color = red
+        text_color = white  # Set text color to white for red health
 
     # Draw health bar background
-    pygame.draw.rect(screen, black, (health_bar_x, health_bar_y, health_bar_width, health_bar_height))
+    pygame.draw.rect(screen, black, (health_bar_x, health_bar_y, screen_width - 40, health_bar_height))
     # Draw health bar
-    pygame.draw.rect(screen, color, (health_bar_x, health_bar_y, health, health_bar_height))
+    pygame.draw.rect(screen, color, (health_bar_x, health_bar_y, health_bar_width, health_bar_height))
 
-    # Display health value
-    health_text = font.render(f"Health: {health}", True, white)
-    screen.blit(health_text, (health_bar_x + health_bar_width + 10, health_bar_y))
-
-
+    # Display health value with the specified text color
+    health_text = font.render(f"Health: {health}", True, text_color)
+    
+    # Adjust the x-coordinate to place the text within the health bar
+    text_x = health_bar_x + (health_bar_width - health_text.get_width()) / 2
+    screen.blit(health_text, (text_x, health_bar_y))
 
 
 def display_text(text, y_offset=0):
@@ -304,8 +336,9 @@ def display_choices(choices, choice_rects):
         screen.blit(choice_text, (choice_rect.x + padding_x, choice_rect.y + padding_y))
 
 
+# Inside the main function
 def main():
-    global current_screen, current_chapter, health
+    global current_screen, current_chapter, health, map_displayed, previous_screen
     pygame.mixer.music.play(-1)
 
     while True:
@@ -320,7 +353,26 @@ def main():
                     sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                if current_screen in chapters:
+                # Check if the map button is clicked
+                if map_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    if current_screen == "map":
+                        # Close the map screen
+                        map_displayed = False
+                        current_screen = previous_screen
+                    else:
+                        # Open the map screen
+                        map_displayed = True
+                        previous_screen = current_screen
+                        current_screen = "map"
+
+                elif current_screen == "map":
+                    # Check if the close button on the map screen is clicked
+                    if close_button_rect.collidepoint(pygame.mouse.get_pos()):
+                        # Close the map screen
+                        map_displayed = False
+                        current_screen = previous_screen
+
+                elif current_screen in chapters:
                     chapter_data = chapters[current_screen]
 
                     if "button_rect" in chapter_data and chapter_data["button_rect"].collidepoint(pygame.mouse.get_pos()):
@@ -332,6 +384,20 @@ def main():
                                 current_chapter = chapter_data["next_chapters"][i]
                                 current_screen = f"chapter{current_chapter}"
 
+                                # Add the following line to handle the choice and update the health bar
+                                handle_choice(chapter_data, i + 1)
+
+
+                    elif "choices" in chapter_data and "button_rect" not in chapter_data:
+                        # Handle case where choices are displayed without a button
+                        for i, rect in enumerate(chapter_data["choice_rects"]):
+                            if rect.collidepoint(pygame.mouse.get_pos()):
+                                current_chapter = chapter_data["next_chapters"][i]
+                                current_screen = f"chapter{current_chapter}"
+
+                                # Add the following line to handle the choice and update the health bar
+                                handle_choice(chapter_data, i + 1)
+
         if current_screen in chapters:
             chapter_data = chapters[current_screen]
 
@@ -339,6 +405,11 @@ def main():
             display_text(chapter_data["text"], -50)
 
             display_health_bar()  # Add this line to display the health bar
+
+            # Draw the map button
+            pygame.draw.rect(screen, blue, map_button_rect, 0)
+            pygame.draw.rect(screen, (255, 255, 255), map_button_rect, 2)
+            screen.blit(map_button_text, (map_button_rect.x + (map_button_rect.width - map_button_text.get_width()) // 2, map_button_rect.y + (map_button_rect.height - map_button_text.get_height()) // 2))
 
             if "choices" in chapter_data:
                 chapter_data["choice_rects"] = []
@@ -373,6 +444,17 @@ def main():
                 pygame.draw.rect(screen, blue if highlight else (0, 0, 0), button_rect, 0)
                 pygame.draw.rect(screen, (255, 255, 255), button_rect, 2)
                 screen.blit(button_text, (button_rect.x, button_rect.y))
+
+            pygame.display.flip()
+
+        elif current_screen == "map":
+            # Display the map image
+            screen.blit(map_image, (0, 0))
+
+            # Draw the close button on the map screen
+            pygame.draw.rect(screen, red, close_button_rect, 0)
+            pygame.draw.rect(screen, (255, 255, 255), close_button_rect, 2)
+            screen.blit(close_button_text, (close_button_rect.x + (close_button_rect.width - close_button_text.get_width()) // 2, close_button_rect.y + (close_button_rect.height - close_button_text.get_height()) // 2))
 
             pygame.display.flip()
 
